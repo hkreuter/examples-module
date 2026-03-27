@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    public: false
+    autowire: true
+
+  OxidEsales\ExamplesModule\ProductInfo\Dao\ActiveProductCountDaoInterface:
+    class: OxidEsales\ExamplesModule\ProductInfo\Dao\ActiveProductCountDao
+
+  OxidEsales\ExamplesModule\ProductInfo\Service\ProductInfoServiceInterface:
+    class: OxidEsales\ExamplesModule\ProductInfo\Service\ProductInfoService
+
+  OxidEsales\ExamplesModule\ProductInfo\Controller\ProductInfoApiController:
+    public: true
