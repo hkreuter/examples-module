@@ -146,7 +146,7 @@ The repository contains examples of following cases and more:
   * [Access via DI container](src/Greeting/services.yaml)
     * Note: After updating environment variables, you must clear the cache for changes to take effect.
 
-* [API Entrypoint examples](src/ApiEntrypoint) — three endpoints demonstrating the three authentication models
+* [API Entrypoint examples](src/ApiEntrypoint) — four endpoints demonstrating the four authentication models
   * **Public endpoint** — [ProductInfo](src/ApiEntrypoint/ProductInfo/Controller/ProductInfoApiController.php): `GET /api/product-info`
     * No authentication required
     * Returns JSON with active product count and translated greeting message
@@ -156,10 +156,15 @@ The repository contains examples of following cases and more:
     * Returns customer counts per user group (sensitive business data)
     * Demonstrates readonly DTO ([CustomerGroupCount](src/ApiEntrypoint/CustomerGroup/DataObject/CustomerGroupCount.php)), LEFT JOIN in DAO
     * Requires `oxid-esales/jwt-authentication-component`
-  * **Session-protected endpoint** — [UserInfo](src/ApiEntrypoint/UserInfo/Controller/UserInfoApiController.php): `GET /api/user-info`
+  * **Frontend session endpoint** — [UserInfo](src/ApiEntrypoint/UserInfo/Controller/UserInfoApiController.php): `GET /api/user-info`
     * Requires `#[SessionUser]` — active frontend session (`sid` cookie)
     * Returns logged-in user's first name and greeting controller URL
-    * Demonstrates AJAX use case: [header button](views/twig/extensions/themes/default/layout/header.html.twig) fetches endpoint and shows personalized greeting link
+    * Demonstrates storefront AJAX use case: [header button](views/twig/extensions/themes/default/layout/header.html.twig) fetches endpoint and shows personalized greeting link
+    * Requires `oxid-esales/session-authentication-component`
+  * **Admin session endpoint** — [AdminInfo](src/ApiEntrypoint/AdminInfo/Controller/AdminInfoApiController.php): `GET /api/admin-info`
+    * Requires `#[AdminSessionUser(roles: ['ROLE_ADMIN'])]` — active admin session (`admin_sid` cookie)
+    * Returns translated greeting with admin email (e.g. "Hello, Admin admin@example.com")
+    * Demonstrates admin AJAX use case: [admin header greeting](views/twig/extensions/themes/admin_twig/include/header_links.html.twig)
     * Requires `oxid-esales/session-authentication-component`
   * Each example follows the same layered structure: Controller → Service (interface) → DAO (interface) → DataObject
   * [Service wiring](src/ApiEntrypoint/ProductInfo/services.yaml) — public controller, private service and DAO
@@ -181,7 +186,6 @@ The repository contains examples of following cases and more:
 * to redirect or not to redirect from inside the shop core
 * graphql query/mutation example
 * extending the internal part
-* API endpoint with admin session authentication
 
 ## Install and try it out
 
