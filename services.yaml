@@ -10,6 +10,7 @@ imports:
   - { resource: src/ApiEntrypoint/ProductInfo/services.yaml }
   - { resource: src/ApiEntrypoint/CustomerGroup/services.yaml }
   - { resource: src/ApiEntrypoint/UserInfo/services.yaml }
+  - { resource: src/ApiEntrypoint/AdminInfo/services.yaml }
 
 services:
 

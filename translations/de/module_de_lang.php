@@ -15,4 +15,5 @@ $aLang = [
     'OEEXAMPLESMODULE_GREETING_UPDATE_TITLE'  => 'Begrüßung bitte hier wählen',
     'OEEXAMPLESMODULE_GREETING_UPDATE_COUNT'  => 'Anzahl Änderungen: ',
     'OEEXAMPLESMODULE_API_HELLO'             => 'Hallo vom OXID eShop API-Entrypoint',
+    'OEEXAMPLESMODULE_ADMIN_HELLO'           => 'Hallo, Admin %s',
 ];

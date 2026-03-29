@@ -24,4 +24,6 @@ final class Module
     public const OEEM_ADMIN_GREETING_TEMPLATE_VARNAME = 'greeting_message';
 
     public const API_HELLO_LANGUAGE_CONST = 'OEEXAMPLESMODULE_API_HELLO';
+
+    public const ADMIN_HELLO_LANGUAGE_CONST = 'OEEXAMPLESMODULE_ADMIN_HELLO';
 }
