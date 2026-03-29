@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OxidEsales\ExamplesModule\Tests\Codeception\Acceptance;
 
 use Codeception\Attribute\Group;
+use Codeception\Util\Fixtures;
 use OxidEsales\Codeception\Step\Start as StartStep;
 use OxidEsales\ExamplesModule\Tests\Codeception\Support\AcceptanceTester;
 
@@ -17,6 +18,28 @@ use OxidEsales\ExamplesModule\Tests\Codeception\Support\AcceptanceTester;
 #[Group('oe_examples_module_api')]
 final class UserInfoGreetingButtonCest
 {
+    private const TEST_FIRST_NAME = 'TestUser';
+
+    public function _before(AcceptanceTester $I): void
+    {
+        $user = Fixtures::get('user');
+        $I->updateInDatabase(
+            'oxuser',
+            ['oxfname' => self::TEST_FIRST_NAME],
+            ['oxusername' => $user['email']]
+        );
+    }
+
+    public function _after(AcceptanceTester $I): void
+    {
+        $user = Fixtures::get('user');
+        $I->updateInDatabase(
+            'oxuser',
+            ['oxfname' => ''],
+            ['oxusername' => $user['email']]
+        );
+    }
+
     public function testGreetingButtonNotVisibleForAnonymousUser(
         AcceptanceTester $I
     ): void {
@@ -44,11 +67,11 @@ final class UserInfoGreetingButtonCest
         );
 
         $I->waitForPageLoad();
-        $I->waitForElementVisible('#oeem-greeting-btn', 5);
+        $I->waitForElementVisible('#oeem-greeting-btn', 10);
         $I->seeElement('#oeem-greeting-btn');
 
         $buttonText = $I->grabTextFrom('#oeem-greeting-btn');
-        $I->assertNotEmpty($buttonText);
+        $I->assertSame(self::TEST_FIRST_NAME, $buttonText);
     }
 
     public function testGreetingButtonLinksToGreetingController(
@@ -65,7 +88,7 @@ final class UserInfoGreetingButtonCest
         );
 
         $I->waitForPageLoad();
-        $I->waitForElementVisible('#oeem-greeting-btn', 5);
+        $I->waitForElementVisible('#oeem-greeting-btn', 10);
         $I->click('#oeem-greeting-btn');
         $I->waitForPageLoad();
 
