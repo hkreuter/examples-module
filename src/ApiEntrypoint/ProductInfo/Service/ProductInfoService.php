@@ -7,11 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\ExamplesModule\ProductInfo\Service;
+namespace OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Service;
 
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\ShopAdapterInterface;
 use OxidEsales\ExamplesModule\Core\Module as ModuleCore;
-use OxidEsales\ExamplesModule\ProductInfo\Dao\ActiveProductCountDaoInterface;
+use OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Dao\ActiveProductCountDaoInterface;
 
 readonly class ProductInfoService implements ProductInfoServiceInterface
 {

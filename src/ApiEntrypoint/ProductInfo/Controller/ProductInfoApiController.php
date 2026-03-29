@@ -7,9 +7,9 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\ExamplesModule\ProductInfo\Controller;
+namespace OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Controller;
 
-use OxidEsales\ExamplesModule\ProductInfo\Service\ProductInfoServiceInterface;
+use OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Service\ProductInfoServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 

@@ -7,10 +7,10 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\ExamplesModule\Tests\Unit\ProductInfo\Controller;
+namespace OxidEsales\ExamplesModule\Tests\Unit\ApiEntrypoint\ProductInfo\Controller;
 
-use OxidEsales\ExamplesModule\ProductInfo\Controller\ProductInfoApiController;
-use OxidEsales\ExamplesModule\ProductInfo\Service\ProductInfoServiceInterface;
+use OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Controller\ProductInfoApiController;
+use OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Service\ProductInfoServiceInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -22,29 +22,23 @@ final class ProductInfoApiControllerTest extends TestCase
     {
         $sut = $this->getSut();
 
-        $response = $sut->getProductInfo();
-
-        $this->assertInstanceOf(JsonResponse::class, $response);
+        $this->assertInstanceOf(JsonResponse::class, $sut->getProductInfo());
     }
 
     public function testGetProductInfoReturnsStatus200(): void
     {
         $sut = $this->getSut();
 
-        $response = $sut->getProductInfo();
-
-        $this->assertSame(200, $response->getStatusCode());
+        $this->assertSame(200, $sut->getProductInfo()->getStatusCode());
     }
 
     public function testGetProductInfoContainsProductCount(): void
     {
-        $expectedCount = 99;
+        $expectedCount = mt_rand(1, 10000);
 
         $serviceStub = $this->createStub(ProductInfoServiceInterface::class);
         $serviceStub->method('getActiveProductCount')
             ->willReturn($expectedCount);
-        $serviceStub->method('getGreetingMessage')
-            ->willReturn('');
 
         $sut = $this->getSut(productInfoService: $serviceStub);
 
@@ -55,11 +49,9 @@ final class ProductInfoApiControllerTest extends TestCase
 
     public function testGetProductInfoContainsTranslatedMessage(): void
     {
-        $expectedMessage = 'Hallo von der OXID eShop API';
+        $expectedMessage = uniqid('message_', true);
 
         $serviceStub = $this->createStub(ProductInfoServiceInterface::class);
-        $serviceStub->method('getActiveProductCount')
-            ->willReturn(0);
         $serviceStub->method('getGreetingMessage')
             ->willReturn($expectedMessage);
 
@@ -72,11 +64,7 @@ final class ProductInfoApiControllerTest extends TestCase
 
     public function testGetProductInfoResponseStructure(): void
     {
-        $serviceStub = $this->createStub(ProductInfoServiceInterface::class);
-        $serviceStub->method('getActiveProductCount')->willReturn(5);
-        $serviceStub->method('getGreetingMessage')->willReturn('Hello');
-
-        $sut = $this->getSut(productInfoService: $serviceStub);
+        $sut = $this->getSut();
 
         $data = $this->decodeResponse($sut->getProductInfo());
 

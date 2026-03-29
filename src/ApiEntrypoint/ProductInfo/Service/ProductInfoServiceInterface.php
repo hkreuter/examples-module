@@ -7,9 +7,11 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\ExamplesModule\ProductInfo\Dao;
+namespace OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Service;
 
-interface ActiveProductCountDaoInterface
+interface ProductInfoServiceInterface
 {
     public function getActiveProductCount(): int;
+
+    public function getGreetingMessage(): string;
 }

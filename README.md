@@ -146,6 +146,15 @@ The repository contains examples of following cases and more:
   * [Access via DI container](src/Greeting/services.yaml)
     * Note: After updating environment variables, you must clear the cache for changes to take effect.
 
+* [API Entrypoint](src/ProductInfo/Controller/ProductInfoApiController.php)
+  * RESTful API controller using `#[Route]` PHP attribute
+  * Public endpoint without authentication: `GET /api/product-info`
+  * Returns JSON response with active product count and translated greeting
+  * Demonstrates service injection, DAO pattern, and translation in API context
+  * [Service layer](src/ProductInfo/Service/ProductInfoService.php) with interface-based dependency injection
+  * [DAO for database access](src/ProductInfo/Dao/ActiveProductCountDao.php) using `QueryBuilderFactoryInterface`
+  * [Service wiring](src/ProductInfo/services.yaml) - public controller, private service and DAO
+
 **HINTS**:
 * Only extend the shop core if there is no other way like listen and handle shop events,
   decorate/replace some DI service.
@@ -163,6 +172,7 @@ The repository contains examples of following cases and more:
 * to redirect or not to redirect from inside the shop core
 * graphql query/mutation example
 * extending the internal part
+* API endpoint with JWT authentication
 
 ## Install and try it out
 

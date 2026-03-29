@@ -7,7 +7,7 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\ExamplesModule\ProductInfo\Dao;
+namespace OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Dao;
 
 use OxidEsales\EshopCommunity\Internal\Framework\Database\QueryBuilderFactoryInterface;
 

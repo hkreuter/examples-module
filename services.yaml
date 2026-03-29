@@ -7,7 +7,8 @@ imports:
   - { resource: src/Logging/services.yaml }
   - { resource: src/ProductVote/services.yaml }
   - { resource: src/Tracker/services.yaml }
-  - { resource: src/ProductInfo/services.yaml }
+  - { resource: src/ApiEntrypoint/ProductInfo/services.yaml }
+  - { resource: src/ApiEntrypoint/CustomerGroup/services.yaml }
 
 services:
 

@@ -7,11 +7,12 @@
 
 declare(strict_types=1);
 
-namespace OxidEsales\ExamplesModule\Tests\Unit\ProductInfo\Service;
+namespace OxidEsales\ExamplesModule\Tests\Unit\ApiEntrypoint\ProductInfo\Service;
 
 use OxidEsales\EshopCommunity\Internal\Transition\Adapter\ShopAdapterInterface;
-use OxidEsales\ExamplesModule\ProductInfo\Dao\ActiveProductCountDaoInterface;
-use OxidEsales\ExamplesModule\ProductInfo\Service\ProductInfoService;
+use OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Dao\ActiveProductCountDaoInterface;
+use OxidEsales\ExamplesModule\ApiEntrypoint\ProductInfo\Service\ProductInfoService;
+use OxidEsales\ExamplesModule\Core\Module as ModuleCore;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
@@ -20,7 +21,7 @@ final class ProductInfoServiceTest extends TestCase
 {
     public function testGetActiveProductCountDelegatesToDao(): void
     {
-        $expectedCount = 42;
+        $expectedCount = mt_rand(1, 10000);
 
         $daoStub = $this->createStub(ActiveProductCountDaoInterface::class);
         $daoStub->method('getActiveProductCount')
@@ -44,11 +45,11 @@ final class ProductInfoServiceTest extends TestCase
 
     public function testGetGreetingMessageTranslatesLanguageConstant(): void
     {
-        $expectedTranslation = 'Hello from OXID eShop API';
+        $expectedTranslation = uniqid('translation_', true);
 
         $shopAdapterStub = $this->createStub(ShopAdapterInterface::class);
         $shopAdapterStub->method('translateString')
-            ->with('OEEXAMPLESMODULE_API_HELLO')
+            ->with(ModuleCore::API_HELLO_LANGUAGE_CONST)
             ->willReturn($expectedTranslation);
 
         $sut = $this->getSut(shopAdapter: $shopAdapterStub);
