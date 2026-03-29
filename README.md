@@ -146,14 +146,23 @@ The repository contains examples of following cases and more:
   * [Access via DI container](src/Greeting/services.yaml)
     * Note: After updating environment variables, you must clear the cache for changes to take effect.
 
-* [API Entrypoint](src/ProductInfo/Controller/ProductInfoApiController.php)
-  * RESTful API controller using `#[Route]` PHP attribute
-  * Public endpoint without authentication: `GET /api/product-info`
-  * Returns JSON response with active product count and translated greeting
-  * Demonstrates service injection, DAO pattern, and translation in API context
-  * [Service layer](src/ProductInfo/Service/ProductInfoService.php) with interface-based dependency injection
-  * [DAO for database access](src/ProductInfo/Dao/ActiveProductCountDao.php) using `QueryBuilderFactoryInterface`
-  * [Service wiring](src/ProductInfo/services.yaml) - public controller, private service and DAO
+* [API Entrypoint examples](src/ApiEntrypoint) — three endpoints demonstrating the three authentication models
+  * **Public endpoint** — [ProductInfo](src/ApiEntrypoint/ProductInfo/Controller/ProductInfoApiController.php): `GET /api/product-info`
+    * No authentication required
+    * Returns JSON with active product count and translated greeting message
+    * Demonstrates `#[Route]` attribute, service injection, DAO pattern, and translation via `ShopAdapterInterface`
+  * **JWT-protected endpoint** — [CustomerGroup](src/ApiEntrypoint/CustomerGroup/Controller/CustomerGroupApiController.php): `GET /api/customer-groups`
+    * Requires `#[IsGranted('ROLE_ADMIN')]` — admin JWT token via `Authorization: Bearer`
+    * Returns customer counts per user group (sensitive business data)
+    * Demonstrates readonly DTO ([CustomerGroupCount](src/ApiEntrypoint/CustomerGroup/DataObject/CustomerGroupCount.php)), LEFT JOIN in DAO
+    * Requires `oxid-esales/jwt-authentication-component`
+  * **Session-protected endpoint** — [UserInfo](src/ApiEntrypoint/UserInfo/Controller/UserInfoApiController.php): `GET /api/user-info`
+    * Requires `#[SessionUser]` — active frontend session (`sid` cookie)
+    * Returns logged-in user's first name and greeting controller URL
+    * Demonstrates AJAX use case: [header button](views/twig/extensions/themes/default/layout/header.html.twig) fetches endpoint and shows personalized greeting link
+    * Requires `oxid-esales/session-authentication-component`
+  * Each example follows the same layered structure: Controller → Service (interface) → DAO (interface) → DataObject
+  * [Service wiring](src/ApiEntrypoint/ProductInfo/services.yaml) — public controller, private service and DAO
 
 **HINTS**:
 * Only extend the shop core if there is no other way like listen and handle shop events,
@@ -172,7 +181,7 @@ The repository contains examples of following cases and more:
 * to redirect or not to redirect from inside the shop core
 * graphql query/mutation example
 * extending the internal part
-* API endpoint with JWT authentication
+* API endpoint with admin session authentication
 
 ## Install and try it out
 
