@@ -153,20 +153,12 @@ The repository contains examples of following cases and more:
     * If the promoted product already appears in results, it moves to position one; otherwise it is prepended and the total count increases
   * [SearchLoggingSubscriber](src/ProductSearch/Subscriber/SearchLoggingSubscriber.php) — listens on `BeforeProductSearchEvent` and `AfterProductSearchEvent` to log search term and result count
   * [SimpleProductSearchDao](src/ProductSearch/Dao/SimpleProductSearchDao.php) — basic search by title, search keys, and article number using `QueryBuilderFactoryInterface`
-  * **How to enable**: Set the following in `var/configuration/configurable_services.yaml`:
+  * **How to enable**: The module registers itself as `ProductSearchServiceInterface` automatically. To enable the custom search, set the parameter in `var/configuration/configurable_services.yaml`:
     ```yaml
     parameters:
       oxid_esales.product_search_enabled: true
-
-    services:
-      OxidEsales\EshopCommunity\Internal\Domain\Product\Search\ProductSearchServiceInterface:
-        class: OxidEsales\ExamplesModule\ProductSearch\Service\PromotedProductSearchService
-        autowire: true
-        public: true
-        arguments:
-          $promotedProductId: '%env(OEEM_PROMOTED_PRODUCT_ID)%'
     ```
-    Then set `OEEM_PROMOTED_PRODUCT_ID=<product-oxid>` in `.env` and clear the cache.
+    Then set `OEEM_PROMOTED_PRODUCT_ID=<product-oxid>` in `.env` and clear the cache with `vendor/bin/oe-console oe:cache:clear`.
 
 **HINTS**:
 * Only extend the shop core if there is no other way like listen and handle shop events,

@@ -9,6 +9,9 @@ services:
   OxidEsales\ExamplesModule\ProductSearch\Service\PromotedProductSearchService:
     arguments:
       $promotedProductId: '%env(OEEM_PROMOTED_PRODUCT_ID)%'
+
+  OxidEsales\EshopCommunity\Internal\Domain\Product\Search\ProductSearchServiceInterface:
+    alias: OxidEsales\ExamplesModule\ProductSearch\Service\PromotedProductSearchService
     public: true
 
   OxidEsales\ExamplesModule\ProductSearch\Subscriber\SearchLoggingSubscriber:
