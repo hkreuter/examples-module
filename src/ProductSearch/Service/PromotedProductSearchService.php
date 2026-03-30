@@ -13,12 +13,10 @@ use OxidEsales\EshopCommunity\Internal\Domain\Product\Search\ProductSearchCriter
 use OxidEsales\EshopCommunity\Internal\Domain\Product\Search\ProductSearchResult;
 use OxidEsales\EshopCommunity\Internal\Domain\Product\Search\ProductSearchServiceInterface;
 use OxidEsales\EshopCommunity\Internal\Framework\Database\Id;
-use OxidEsales\ExamplesModule\ProductSearch\Dao\SimpleProductSearchDaoInterface;
 
 readonly class PromotedProductSearchService implements ProductSearchServiceInterface
 {
     public function __construct(
-        private SimpleProductSearchDaoInterface $searchDao,
         private string $promotedProductId,
     ) {
     }
@@ -27,33 +25,13 @@ readonly class PromotedProductSearchService implements ProductSearchServiceInter
         ProductSearchCriteria $criteria,
         array $context = [],
     ): ProductSearchResult {
-        $result = $this->searchDao->search($criteria);
-
         if ($this->promotedProductId === '') {
-            return $result;
+            return new ProductSearchResult([], 0);
         }
 
-        return $this->prependPromotedProduct($result);
-    }
-
-    private function prependPromotedProduct(
-        ProductSearchResult $result,
-    ): ProductSearchResult {
-        $ids = $result->getProductIds();
-        $total = $result->getTotal();
-
-        $filteredIds = array_filter(
-            $ids,
-            fn(Id $id) => (string) $id !== $this->promotedProductId,
-        );
-
-        $wasAlreadyPresent = count($filteredIds) < count($ids);
-
-        array_unshift($filteredIds, Id::fromString($this->promotedProductId));
-
         return new ProductSearchResult(
-            array_values($filteredIds),
-            $wasAlreadyPresent ? $total : $total + 1,
+            [Id::fromString($this->promotedProductId)],
+            1,
         );
     }
 }

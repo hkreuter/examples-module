@@ -3,9 +3,6 @@ services:
     public: false
     autowire: true
 
-  OxidEsales\ExamplesModule\ProductSearch\Dao\SimpleProductSearchDaoInterface:
-    class: OxidEsales\ExamplesModule\ProductSearch\Dao\SimpleProductSearchDao
-
   OxidEsales\ExamplesModule\ProductSearch\Service\PromotedProductSearchService:
     arguments:
       $promotedProductId: '%env(OEEM_PROMOTED_PRODUCT_ID)%'

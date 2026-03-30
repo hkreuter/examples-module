@@ -147,12 +147,11 @@ The repository contains examples of following cases and more:
     * Note: After updating environment variables, you must clear the cache for changes to take effect.
 
 * [Custom Product Search Service](src/ProductSearch) — implementing the new `ProductSearchServiceInterface` (OXID 7.5+)
-  * [PromotedProductSearchService](src/ProductSearch/Service/PromotedProductSearchService.php) — always shows a configured product first in search results
-    * Implements `ProductSearchServiceInterface` with a simple search DAO delegate
+  * [PromotedProductSearchService](src/ProductSearch/Service/PromotedProductSearchService.php) — always returns a configured promoted product, regardless of the search term
+    * Implements `ProductSearchServiceInterface` — minimal example showing the interface contract
     * Promoted product ID configured via `.env` variable `OEEM_PROMOTED_PRODUCT_ID`
-    * If the promoted product already appears in results, it moves to position one; otherwise it is prepended and the total count increases
+    * The shop's `ArticleList::loadIds()` handles visibility and shop scoping for the returned ID
   * [SearchLoggingSubscriber](src/ProductSearch/Subscriber/SearchLoggingSubscriber.php) — listens on `BeforeProductSearchEvent` and `AfterProductSearchEvent` to log search term and result count
-  * [SimpleProductSearchDao](src/ProductSearch/Dao/SimpleProductSearchDao.php) — basic search by title, search keys, and article number using `QueryBuilderFactoryInterface`
   * **How to enable**: The module registers itself as `ProductSearchServiceInterface` automatically. To enable the custom search, set the parameter in `var/configuration/configurable_services.yaml`:
     ```yaml
     parameters:
