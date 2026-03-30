@@ -146,6 +146,28 @@ The repository contains examples of following cases and more:
   * [Access via DI container](src/Greeting/services.yaml)
     * Note: After updating environment variables, you must clear the cache for changes to take effect.
 
+* [Custom Product Search Service](src/ProductSearch) — implementing the new `ProductSearchServiceInterface` (OXID 7.5+)
+  * [PromotedProductSearchService](src/ProductSearch/Service/PromotedProductSearchService.php) — always shows a configured product first in search results
+    * Implements `ProductSearchServiceInterface` with a simple search DAO delegate
+    * Promoted product ID configured via `.env` variable `OEEM_PROMOTED_PRODUCT_ID`
+    * If the promoted product already appears in results, it moves to position one; otherwise it is prepended and the total count increases
+  * [SearchLoggingSubscriber](src/ProductSearch/Subscriber/SearchLoggingSubscriber.php) — listens on `BeforeProductSearchEvent` and `AfterProductSearchEvent` to log search term and result count
+  * [SimpleProductSearchDao](src/ProductSearch/Dao/SimpleProductSearchDao.php) — basic search by title, search keys, and article number using `QueryBuilderFactoryInterface`
+  * **How to enable**: Set the following in `var/configuration/configurable_services.yaml`:
+    ```yaml
+    parameters:
+      oxid_esales.product_search_enabled: true
+
+    services:
+      OxidEsales\EshopCommunity\Internal\Domain\Product\Search\ProductSearchServiceInterface:
+        class: OxidEsales\ExamplesModule\ProductSearch\Service\PromotedProductSearchService
+        autowire: true
+        public: true
+        arguments:
+          $promotedProductId: '%env(OEEM_PROMOTED_PRODUCT_ID)%'
+    ```
+    Then set `OEEM_PROMOTED_PRODUCT_ID=<product-oxid>` in `.env` and clear the cache.
+
 **HINTS**:
 * Only extend the shop core if there is no other way like listen and handle shop events,
   decorate/replace some DI service.

@@ -1,12 +1,14 @@
 parameters:
   app.log_file_path: '/var/www/source/log/oe_examples_module.log'
   env(OEEM_SHOP_NAME): 'OXID eShop name not overwritten by .env file'
+  env(OEEM_PROMOTED_PRODUCT_ID): ''
 
 imports:
   - { resource: src/Greeting/services.yaml }
   - { resource: src/Logging/services.yaml }
   - { resource: src/ProductVote/services.yaml }
   - { resource: src/Tracker/services.yaml }
+  - { resource: src/ProductSearch/services.yaml }
 
 services:
 
