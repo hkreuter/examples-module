@@ -149,7 +149,7 @@ The repository contains examples of following cases and more:
 * [API Entrypoint examples](src/ApiEntrypoint) — four endpoints demonstrating the four authentication models
   * **Public endpoint** — [ProductInfo](src/ApiEntrypoint/ProductInfo/Controller/ProductInfoApiController.php): `GET /api/product-info`
     * No authentication required
-    * Returns JSON with active product count and translated greeting message
+    * Returns JSON with active product count of current shop and translated greeting message
     * Demonstrates `#[Route]` attribute, service injection, DAO pattern, and translation via `ShopAdapterInterface`
   * **JWT-protected endpoint** — [CustomerGroup](src/ApiEntrypoint/CustomerGroup/Controller/CustomerGroupApiController.php): `GET /api/customer-groups`
     * Requires `#[IsGranted('ROLE_ADMIN')]` — admin JWT token via `Authorization: Bearer`
