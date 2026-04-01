@@ -155,7 +155,7 @@ The repository contains examples of following cases and more:
     * Requires `#[IsGranted('ROLE_ADMIN')]` — admin JWT token via `Authorization: Bearer`
     * Returns customer counts per user group (sensitive business data)
     * Demonstrates readonly DTO ([CustomerGroupCount](src/ApiEntrypoint/CustomerGroup/DataObject/CustomerGroupCount.php)), LEFT JOIN in DAO
-    * Requires `oxid-esales/jwt-authentication-component`
+    * Requires `oxid-esales/jwt-authentication-component` — obtain a token via `POST /api/login` (see [JWT component README](https://github.com/OXID-eSales/jwt-authentication-component#login) for details)
   * **Frontend session endpoint** — [UserInfo](src/ApiEntrypoint/UserInfo/Controller/UserInfoApiController.php): `GET /api/user-info`
     * Requires `#[SessionUser]` — active frontend session (`sid` cookie)
     * Returns logged-in user's first name and greeting controller URL
